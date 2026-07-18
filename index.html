@@ -130,21 +130,21 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="download (1).jpeg" class="d-block w-100" alt="Air Jordan 4 Lightning">
+                    <img src="air-jordan-4-lightning.jpeg" class="d-block w-100" alt="Air Jordan 4 Lightning">
                     <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
                         <h5>Latest Arrivals</h5>
                         <p>Check out the new Air Jordan 4 "Lightning".</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="download (3).jpeg" class="d-block w-100" alt="Air Jordan 4 Thunder">
+                    <img src="air-jordan-4-thunder.jpeg" class="d-block w-100" alt="Air Jordan 4 Thunder">
                     <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
                         <h5>Iconic Styles</h5>
                         <p>The classic Air Jordan 4 "Thunder" is back.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="d.jpeg" class="d-block w-100" alt="Nike Dunk Low Plum">
+                    <img src="air-jordan-1-bred-toe.jpeg" class="d-block w-100" alt="Nike Dunk Low Plum">
                     <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
                         <h5>Vibrant Colors</h5>
                         <p>Stand out with the Nike Dunk Low "Plum".</p>
@@ -192,30 +192,20 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         // --- Product Data ---
-        const allProducts = [
-            { name: 'Air Jordan 4 "Lightning"', price: 4500, image: 'download (1).jpeg', category: 'Basketball' },
-            { name: 'Air Jordan 4 Blue thunder', price: 4500, image: 'download (2).jpeg', category: 'Skateboarding' },
-            { name: 'Nike Dunk Low "Panda"', price: 4500, image: 'download.jpeg', category: 'Skateboarding' },
-            { name: 'Bike shoes brick-red', price: 4500, image: 'bike shoes.jpeg', category: 'Sports' },
-            { name: 'Air Jordan 4 "Cool Grey"', price: 4500, image: '1.jpeg', category: 'Basketball' },
-            { name: 'Jordan 3 Black Cat', price: 4500, image: 'black.jpeg', category: 'Lifestyle' },
-            { name: 'Air Jordan 4 "Thunder"', price: 4500, image: 'download (3).jpeg', category: 'Basketball' },
-            { name: 'Air Jordan 4 "Bred"', price: 4500, image: 'download (4).jpeg', category: 'Basketball' },
-            { name: 'Air Jordan 4 "Military Black"', price: 4500, image: 'download (5).jpeg', category: 'Basketball' },
-            { name: 'Air Jordan 4 "Red Cement"', price: 4500, image: 'download (6).jpeg', category: 'Basketball' },
-            { name: 'Air Jordan 4 "Frozen Moments"', price: 4500, image: 'download (7).jpeg', category: 'Basketball' },
-            { name: 'Nike Dunk Low "Photon Dust"', price: 4500, image: 'white.jpeg', category: 'Lifestyle' },
-            { name: 'Nike Dunk Low "White/Grey"', price: 4500, image: 'Nike Panelled Leather Dunk Low Sneakers - White.jpeg', category: 'Skateboarding' },
-            { name: 'New Balance 550 Black', price: 4500, image: 'new balance noir.jpeg', category: 'Lifestyle' },
-            { name: 'Nike Shox TL Black/Blue', price: 4500, image: 'Nike Shox TL ‘Black Racer Blue’.jpeg', category: 'Running' },
-            { name: 'Nike Air Jordan 4 "Black Cat"', price: 4500, image: 'nike.jpeg', category: 'Basketball' },
-            { name: 'NOCTA Nike Hot Step 2', price: 4500, image: 'NOCTA Nike Hot step 2.jpeg', category: 'Lifestyle' },
-            { name: 'New Balance 2002R', price: 4500, image: 'Shop the latest collections from curated mix of progressive designers and iconic brands online at SEVENSTORE_ Free UK delivery on orders over £100_.jpeg', category: 'Lifestyle' },
-            { name: 'Adidas Campus 00s', price: 4500, image: 'Trending Shoes & Sneakers Everyone Is Obsessed With in 2026.jpeg', category: 'Lifestyle' },
-            { name: 'Air Jordan 1 "Bred Toe"', price: 4500, image: 'd.jpeg', category: 'Basketball' },
-            { name: 'Air Jordan 4 "Pine Green"', price: 4500, image: 'Best Jordan 4s _ Crepslocker.jpeg', category: 'Basketball' },
-            { name: 'Nike Dunk Low "Olive"', price: 4500, image: '7.jpeg', category: 'Skateboarding' },
-        ];
+        let allProducts = [];
+
+        async function loadProducts() {
+            try {
+                const response = await fetch('products.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                allProducts = await response.json();
+            } catch (error) {
+                console.error("Failed to load products:", error);
+                productGrid.innerHTML = '<p class="text-center text-danger">Could not load products. Please try again later.</p>';
+            }
+        }
 
         // --- DOM Elements ---
         const productGrid = document.getElementById('product-grid');
@@ -478,11 +468,15 @@
         });
 
         // --- Initial Page Load ---
-        updateCartCount();
-        renderProducts();
-        setTimeout(() => {
-            chatWindow.style.display = 'flex';
-        }, 3000); // Open chatbot after 3 seconds
+        async function init() {
+            await loadProducts();
+            updateCartCount();
+            renderProducts();
+            setTimeout(() => {
+                chatWindow.style.display = 'flex';
+            }, 3000); // Open chatbot after 3 seconds
+        }
+        init();
     });
 </script>
 
