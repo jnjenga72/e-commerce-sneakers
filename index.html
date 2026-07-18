@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr Kicks - Homepage</title>
+    <style>
+        .carousel-item img {
+            max-height: 400px;
+            object-fit: cover;
+            object-position: center;
+        }
+        /* Make navbar sticky and apply glass effect */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1050;
+            background-color: rgba(33, 37, 41, 0.85); /* Semi-transparent dark */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* For Safari */
+        }
+        /* Floating WhatsApp Icon */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px #999;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Chatbot Styles */
+        .chatbot-toggler {
+            position: fixed;
+            bottom: 40px;
+            left: 40px;
+            width: 60px;
+            height: 60px;
+            background-color: #0D6EFD;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 100;
+        }
+        .chat-window {
+            position: fixed;
+            bottom: 120px;
+            left: 40px;
+            width: 350px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 128px 0 rgba(0,0,0,0.1), 0 32px 64px -48px rgba(0,0,0,0.5);
+            display: none;
+            flex-direction: column;
+            z-index: 100;
+        }
+        .chat-header {
+            background: #0D6EFD;
+            color: #fff;
+            padding: 1rem;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+        .chat-input {
+            display: flex;
+            padding: 0.5rem;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+        <div class="container">
+            <div class="container-fluid">
+                <a href="index.html" class="navbar-brand">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="120" height="28" viewBox="0 0 120 28">
+                        <style>.logo-font{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol';font-size:24px;font-weight:bold;fill:white;}.logo-k{fill:#0D6EFD;}</style>
+                        <text x="0" y="22" class="logo-font">MR <tspan class="logo-k">KICKS</tspan></text>
+                    </svg>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link position-relative" href="cart.html" aria-label="Shopping Cart">
+                                <i class="bi bi-cart fs-5"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary" id="cart-count">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Bar Container -->
+    <div class="container my-3 position-relative">
+        <input class="form-control" type="search" id="search-input" placeholder="Search for sneakers..." aria-label="Search">
+        <div id="search-suggestions" class="list-group position-absolute w-100" style="z-index: 1000; display: none;"></div>
+    </div>
+
+    <div class="container">
+        <!-- Carousel -->
+        <div id="hero-carousel" class="carousel slide mb-4" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="download (1).jpeg" class="d-block w-100" alt="Air Jordan 4 Lightning">
+                    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
+                        <h5>Latest Arrivals</h5>
+                        <p>Check out the new Air Jordan 4 "Lightning".</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="download (3).jpeg" class="d-block w-100" alt="Air Jordan 4 Thunder">
+                    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
+                        <h5>Iconic Styles</h5>
+                        <p>The classic Air Jordan 4 "Thunder" is back.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="d.jpeg" class="d-block w-100" alt="Nike Dunk Low Plum">
+                    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
+                        <h5>Vibrant Colors</h5>
+                        <p>Stand out with the Nike Dunk Low "Plum".</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Bar Container -->
+        <div class="my-4 position-relative">
+            <input class="form-control" type="search" id="search-input" placeholder="Search for sneakers..." aria-label="Search">
+            <div id="search-suggestions" class="list-group position-absolute w-100" style="z-index: 1000; display: none;"></div>
+        </div>
+
+        <h1 class="text-center mb-4">Welcome to Mr Kicks</h1>
+
+        <!-- Controls: Search and Filter -->
+        <div class="row mb-4 justify-content-end">
+            <div class="col-md-4">
+                <select id="filter-select" class="form-select">
+                    <option value="all" selected>All Categories</option>
+                    <option value="Lifestyle">Lifestyle</option>
+                    <option value="Basketball">Basketball</option>
+                    <option value="Skateboarding">Skateboarding</option>
+                    <option value="Running">Running</option>
+                    <option value="Sports">Sports</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div id="product-grid" class="row g-4">
+            <!-- Products will be injected here by JavaScript -->
+        </div>
+        <div id="no-results" class="text-center my-5" style="display: none;">
+            <h3>No products found.</h3>
+        </div>
+
+        <!-- Pagination -->
+        <nav id="pagination-container" class="mt-5 d-flex justify-content-center" aria-label="Page navigation">
+            <!-- Pagination links will be injected here -->
+        </nav>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Product Data ---
+        const allProducts = [
+            { name: 'Air Jordan 4 "Lightning"', price: 4500, image: 'download (1).jpeg', category: 'Basketball' },
+            { name: 'Air Jordan 4 Blue thunder', price: 4500, image: 'download (2).jpeg', category: 'Skateboarding' },
+            { name: 'Nike Dunk Low "Panda"', price: 4500, image: 'download.jpeg', category: 'Skateboarding' },
+            { name: 'Bike shoes brick-red', price: 4500, image: 'bike shoes.jpeg', category: 'Sports' },
+            { name: 'Air Jordan 4 "Cool Grey"', price: 4500, image: '1.jpeg', category: 'Basketball' },
+            { name: 'Jordan 3 Black Cat', price: 4500, image: 'black.jpeg', category: 'Lifestyle' },
+            { name: 'Air Jordan 4 "Thunder"', price: 4500, image: 'download (3).jpeg', category: 'Basketball' },
+            { name: 'Air Jordan 4 "Bred"', price: 4500, image: 'download (4).jpeg', category: 'Basketball' },
+            { name: 'Air Jordan 4 "Military Black"', price: 4500, image: 'download (5).jpeg', category: 'Basketball' },
+            { name: 'Air Jordan 4 "Red Cement"', price: 4500, image: 'download (6).jpeg', category: 'Basketball' },
+            { name: 'Air Jordan 4 "Frozen Moments"', price: 4500, image: 'download (7).jpeg', category: 'Basketball' },
+            { name: 'Nike Dunk Low "Photon Dust"', price: 4500, image: 'white.jpeg', category: 'Lifestyle' },
+            { name: 'Nike Dunk Low "White/Grey"', price: 4500, image: 'Nike Panelled Leather Dunk Low Sneakers - White.jpeg', category: 'Skateboarding' },
+            { name: 'New Balance 550 Black', price: 4500, image: 'new balance noir.jpeg', category: 'Lifestyle' },
+            { name: 'Nike Shox TL Black/Blue', price: 4500, image: 'Nike Shox TL ‘Black Racer Blue’.jpeg', category: 'Running' },
+            { name: 'Nike Air Jordan 4 "Black Cat"', price: 4500, image: 'nike.jpeg', category: 'Basketball' },
+            { name: 'NOCTA Nike Hot Step 2', price: 4500, image: 'NOCTA Nike Hot step 2.jpeg', category: 'Lifestyle' },
+            { name: 'New Balance 2002R', price: 4500, image: 'Shop the latest collections from curated mix of progressive designers and iconic brands online at SEVENSTORE_ Free UK delivery on orders over £100_.jpeg', category: 'Lifestyle' },
+            { name: 'Adidas Campus 00s', price: 4500, image: 'Trending Shoes & Sneakers Everyone Is Obsessed With in 2026.jpeg', category: 'Lifestyle' },
+            { name: 'Air Jordan 1 "Bred Toe"', price: 4500, image: 'd.jpeg', category: 'Basketball' },
+            { name: 'Air Jordan 4 "Pine Green"', price: 4500, image: 'Best Jordan 4s _ Crepslocker.jpeg', category: 'Basketball' },
+            { name: 'Nike Dunk Low "Olive"', price: 4500, image: '7.jpeg', category: 'Skateboarding' },
+        ];
+
+        // --- DOM Elements ---
+        const productGrid = document.getElementById('product-grid');
+        const searchInput = document.getElementById('search-input');
+        const filterSelect = document.getElementById('filter-select');
+        const paginationContainer = document.getElementById('pagination-container');
+        const suggestionsContainer = document.getElementById('search-suggestions');
+        const noResultsDiv = document.getElementById('no-results');
+        const chatbotToggler = document.getElementById('chatbot-toggler');
+        const chatWindow = document.getElementById('chat-window');
+        const chatInputField = document.getElementById('chat-input-field');
+        const chatSendBtn = document.getElementById('chat-send-btn');
+        const chatMessages = document.getElementById('chat-messages');
+
+        // --- State ---
+        let currentPage = 1;
+        const itemsPerPage = 6;
+
+        // --- Functions ---
+        function renderProducts() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filterCategory = filterSelect.value;
+
+            let filteredProducts = allProducts.filter(product => {
+                const matchesSearch = product.name.toLowerCase().includes(searchTerm);
+                const matchesCategory = filterCategory === 'all' || product.category === filterCategory;
+                return matchesSearch && matchesCategory;
+            });
+
+            noResultsDiv.style.display = filteredProducts.length === 0 ? 'block' : 'none';
+
+            const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+            if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const paginatedProducts = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
+
+            productGrid.innerHTML = '';
+            paginatedProducts.forEach(product => {
+                productGrid.innerHTML += `
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="card shadow h-100 text-center">
+                            <div class="card-body d-flex flex-column">
+                                <img src="${product.image}" alt="${product.name}" class="d-block mx-auto w-75 mb-2">
+                                <p class="mt-2">${product.name}</p>
+                                <h5 class="price">Ksh ${product.price.toLocaleString()}</h5>
+                                <button class="btn btn-primary add-to-cart-btn mt-auto"
+                                    data-name="${product.name}"
+                                    data-price="${product.price}"
+                                    data-image="${product.image}">
+                                    Buy Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            renderPagination(totalPages);
+        }
+
+        function renderPagination(totalPages) {
+            paginationContainer.innerHTML = '';
+            if (totalPages <= 1) return;
+
+            let paginationHTML = '<ul class="pagination">';
+            for (let i = 1; i <= totalPages; i++) {
+                paginationHTML += `
+                    <li class="page-item ${i === currentPage ? 'active' : ''}">
+                        <a class="page-link" href="#" data-page="${i}">${i}</a>
+                    </li>
+                `;
+            }
+            paginationHTML += '</ul>';
+            paginationContainer.innerHTML = paginationHTML;
+        }
+
+        function handleSearchInput() {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            if (searchTerm.length > 0) {
+                const suggestedProducts = allProducts.filter(product => product.name.toLowerCase().includes(searchTerm));
+                if (suggestedProducts.length > 0) {
+                    suggestionsContainer.innerHTML = suggestedProducts.map(p => `<a href="#" class="list-group-item list-group-item-action suggestion-item">${p.name}</a>`).join('');
+                    suggestionsContainer.style.display = 'block';
+                } else {
+                    suggestionsContainer.style.display = 'none';
+                }
+            } else {
+                suggestionsContainer.style.display = 'none';
+            }
+
+            currentPage = 1;
+            renderProducts();
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = cartCount;
+        }
+
+        const handleUserMessage = async () => {
+            const userMessage = chatInputField.value.trim();
+            if (!userMessage) return;
+
+            chatMessages.innerHTML += `<div class="alert alert-secondary text-end">${userMessage}</div>`;
+            chatInputField.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            const typingIndicator = `<div class="alert alert-info" id="typing-indicator">Bot is typing...</div>`;
+            chatMessages.innerHTML += typingIndicator;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            const botResponse = await getBotResponse(userMessage);
+            
+            document.getElementById('typing-indicator').remove();
+            chatMessages.innerHTML += `<div class="alert alert-info">${botResponse}</div>`;
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+        };
+
+        function getBotResponse(message) {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    const lowerCaseMessage = message.toLowerCase();
+
+                    // Basic Greetings
+                    const greetings = ['hello', 'hi', 'hola', 'bonjour', 'salut', 'hallo', 'guten tag', 'habari', 'jambo', 'nǐ hǎo', 'namaste', 'marhaba', 'olá', 'privet', 'konnichiwa'];
+                    if (greetings.some(greeting => lowerCaseMessage.includes(greeting))) {
+                        resolve("Hello! How can I help you? You can ask about our location, prices, or specific brands.");
+                        return;
+                    }
+
+                    // Navigation
+                    if (lowerCaseMessage.includes('cart') && !lowerCaseMessage.includes('black cat')) { // Avoid conflict with product name
+                        resolve(`You can view your shopping cart here: <a href="cart.html">Go to Cart</a>.`);
+                        return;
+                    }
+                    if (lowerCaseMessage.includes('payment') || lowerCaseMessage.includes('pay')) {
+                        resolve(`Our payment options can be found on the payment page. You can proceed from your cart.`);
+                        return;
+                    }
+
+                    // Location & Hours
+                    if (lowerCaseMessage.includes('location') || lowerCaseMessage.includes('where')) {
+                        resolve("We are located at Moi Avenue, Nairobi, right next to the National Archives.");
+                        return;
+                    }
+
+                    if (lowerCaseMessage.includes('hours') || lowerCaseMessage.includes('open')) {
+                        resolve("We are open from 9 AM to 6 PM, Monday to Saturday.");
+                        return;
+                    }
+
+                    // Website Policies
+                    if (lowerCaseMessage.includes('payment methods')) {
+                        resolve("We accept Credit/Debit Card (via Stripe), PayPal, M-Pesa, and Bank Transfer.");
+                        return;
+                    }
+                    if (lowerCaseMessage.includes('return') || lowerCaseMessage.includes('refund')) {
+                        resolve("We offer a 14-day return policy for unworn items in their original packaging. Please visit our store with the receipt to process a return.");
+                        return;
+                    }
+
+                    // Dynamic Price Range
+                    if (lowerCaseMessage.includes('price') || lowerCaseMessage.includes('cost')) {
+                        const prices = allProducts.map(p => p.price);
+                        const minPrice = Math.min(...prices);
+                        const maxPrice = Math.max(...prices);
+                        resolve(`Our prices currently range from Ksh ${minPrice.toLocaleString()} to Ksh ${maxPrice.toLocaleString()}. You can see the specific price for each shoe on our product page.`);
+                        return;
+                    }
+
+                    // Check for specific product names
+                    for (const product of allProducts) {
+                        if (lowerCaseMessage.includes(product.name.toLowerCase())) {
+                            resolve(`The <strong>${product.name}</strong> is in the ${product.category} category and costs Ksh ${product.price.toLocaleString()}.`);
+                            return;
+                        }
+                    }
+
+                    // Check for category names
+                    const categories = ['lifestyle', 'basketball', 'skateboarding', 'running', 'sports'];
+                    for (const category of categories) {
+                        if (lowerCaseMessage.includes(category)) {
+                            const categoryProducts = allProducts.filter(p => p.category.toLowerCase() === category);
+                            if (categoryProducts.length > 0) {
+                                const productNames = categoryProducts.slice(0, 3).map(p => p.name).join(', ');
+                                resolve(`Yes, we have ${category} shoes! Some popular ones include: ${productNames}. You can use the filter on our homepage to see them all.`);
+                                return;
+                            }
+                        }
+                    }
+
+                    // Thank you
+                    if (lowerCaseMessage.includes('thanks') || lowerCaseMessage.includes('thank you')) {
+                        resolve("You're welcome! Let me know if there is anything else I can help with.");
+                        return;
+                    }
+
+                    // Fallback response
+                    resolve("I'm sorry, I can only answer questions about our location, prices, and shoe brands. Please try asking one of those.");
+                    resolve("I'm sorry, I can only answer questions about our location, prices, policies, and shoe brands. Please try asking one of those.");
+                }, 1000); // Simulate 1 second of "thinking"
+            });
+        }
+
+        // --- Event Listeners ---
+        searchInput.addEventListener('input', handleSearchInput);
+        filterSelect.addEventListener('change', () => {
+            currentPage = 1;
+            renderProducts();
+        });
+        paginationContainer.addEventListener('click', (e) => {
+            if (e.target.matches('.page-link')) {
+                e.preventDefault();
+                currentPage = parseInt(e.target.dataset.page);
+                renderProducts();
+            }
+        });
+        productGrid.addEventListener('click', (e) => {
+            if (e.target.classList.contains('add-to-cart-btn')) {
+                const button = e.target;
+                const name = button.dataset.name;
+                const price = parseFloat(button.dataset.price);
+                const image = button.dataset.image;
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const existingItem = cart.find(item => item.name === name);
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    cart.push({ name, price, image, quantity: 1 });
+                }
+                localStorage.setItem('cart', JSON.stringify(cart));
+                window.location.href = 'cart.html';
+            }
+        });
+        suggestionsContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('suggestion-item')) {
+                e.preventDefault();
+                searchInput.value = e.target.textContent;
+                suggestionsContainer.style.display = 'none';
+                renderProducts();
+            }
+        });
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.position-relative')) {
+                suggestionsContainer.style.display = 'none';
+            }
+        });
+        chatbotToggler.addEventListener('click', () => {
+            chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+        });
+        chatSendBtn.addEventListener('click', handleUserMessage);
+        chatInputField.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleUserMessage();
+            }
+        });
+
+        // --- Initial Page Load ---
+        updateCartCount();
+        renderProducts();
+        setTimeout(() => {
+            chatWindow.style.display = 'flex';
+        }, 3000); // Open chatbot after 3 seconds
+    });
+</script>
+
+<!-- Floating WhatsApp Icon -->
+<a href="https://wa.me/254794784892" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+    <i class="bi bi-whatsapp"></i>
+</a>
+
+<!-- Chatbot -->
+<div class="chatbot-toggler" id="chatbot-toggler">
+    <i class="bi bi-chat-dots"></i>
+</div>
+<div class="chat-window" id="chat-window">
+    <div class="chat-header">
+        <h5 class="mb-0">MR KICKS Bot</h5>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+        <div class="alert alert-info">Hello! How can I help you today? Ask about our location, prices, or brands.</div>
+    </div>
+    <div class="chat-input">
+        <input type="text" id="chat-input-field" class="form-control" placeholder="Ask a question...">
+        <button class="btn btn-primary ms-2" id="chat-send-btn">Send</button>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    <div class="container">
+        <p class="mb-0">&copy; 2026 MR KICKS. All Rights Reserved.</p>
+    </div>
+</footer>
+</body>
+</html>

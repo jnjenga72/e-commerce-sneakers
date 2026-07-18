@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <style>
+        @keyframes fadeOutUp {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+        .fade-out-up {
+            animation: fadeOutUp 1s ease-out forwards;
+        }
+        /* Make navbar sticky and apply glass effect */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1050;
+            background-color: rgba(33, 37, 41, 0.85); /* Semi-transparent dark */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* For Safari */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+        <div class="container">
+            <a href="index.html" class="navbar-brand me-auto">MR KICKS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="index.html" aria-label="Home">
+                            <i class="bi bi-house fs-5 me-1"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="cart.html" aria-label="Shopping Cart">
+                            <span class="position-relative">
+                                <i class="bi bi-cart fs-5"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">0</span>
+                            </span><span class="ms-2">Cart</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div id="payment-container">
+                    <div class="mb-3">
+                        <a href="cart.html" class="text-decoration-none text-secondary"><i class="bi bi-arrow-left"></i> Back to Cart</a>
+                    </div>
+                    <h2 class="text-center mb-4">Payment Details</h2>
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h3 class="mb-4">Total Amount: Ksh <span id="total-amount">0.00</span></h3>
+
+                            <div class="accordion" id="paymentMethodsAccordion">
+                                <!-- Credit/Debit Card -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            Credit/Debit Card
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#paymentMethodsAccordion">
+                                        <div class="accordion-body">
+                                            <form id="payment-form">
+                                                <div id="payment-element" class="mb-3">
+                                                    <!-- A Stripe Element will be inserted here. -->
+                                                </div>
+                                                <div class="d-grid">
+                                                    <button type="submit" class="btn btn-primary btn-lg">Pay Now</button>
+                                                    <div id="payment-message" class="text-danger mt-2"></div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- PayPal -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            PayPal
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#paymentMethodsAccordion">
+                                        <div class="accordion-body text-center">
+                                            <p>Click the button below to complete your payment with PayPal.</p>
+                                            <button id="paypal-button" class="btn btn-primary"><img src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_SbyPP_mc_vs_dc_ae.jpg" alt="PayPal" style="height: 24px;"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- M-Pesa -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingThree">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            M-Pesa
+                                        </button>
+                                    </h2>
+                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#paymentMethodsAccordion">
+                                        <div class="accordion-body">
+                                            <form id="mpesa-form">
+                                                <p>Enter your M-Pesa registered phone number to receive a payment prompt.</p>
+                                                <div class="mb-3">
+                                                    <label for="mpesaPhone" class="form-label">Phone Number</label>
+                                                    <input type="tel" class="form-control" id="mpesaPhone" placeholder="07xxxxxxxx" required>
+                                                </div>
+                                                <div class="d-grid">
+                                                    <button type="submit" class="btn btn-success">Pay with M-Pesa</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Bank Transfer -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingFour">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                            Bank Transfer
+                                        </button>
+                                    </h2>
+                                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#paymentMethodsAccordion">
+                                        <div class="accordion-body">
+                                            <p>Please transfer the total amount to the following bank account:</p>
+                                            <ul class="list-unstyled">
+                                                <li><strong>Bank Name:</strong> Kicks Commercial Bank</li>
+                                                <li><strong>Account Name:</strong> MR KICKS LTD</li>
+                                                <li><strong>Account Number:</strong> 1234567890</li>
+                                                <li><strong>Reference:</strong> Your Order ID</li>
+                                            </ul>
+                                            <button id="bank-transfer-button" class="btn btn-info">I Have Completed the Transfer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="success-message" class="text-center" style="display: none;">
+                    <h2 class="text-success">Payment Successful!</h2>
+                    <p>Your Order ID: <strong id="order-id"></strong></p>
+                    <p>Thank you for your purchase.</p>
+                    <a href="index.html" class="btn btn-primary">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    // Add your Stripe publishable key here
+    const stripe = Stripe('pk_test_...your_publishable_key_here');
+    document.addEventListener('DOMContentLoaded', () => {
+        updateCartCount();
+        const totalAmountSpan = document.getElementById('total-amount');
+        const paymentForm = document.getElementById('payment-form');
+        const mpesaForm = document.getElementById('mpesa-form');
+        const bankTransferButton = document.getElementById('bank-transfer-button');
+        const paypalButton = document.getElementById('paypal-button');
+        const paymentContainer = document.getElementById('payment-container');
+        const successMessage = document.getElementById('success-message');
+        const urlParams = new URLSearchParams(window.location.search);
+        const total = parseFloat(urlParams.get('total'));
+        let elements; // To hold Stripe Elements instance
+
+
+        const showSuccess = () => {
+            // Generate a unique order ID
+            const orderId = 'MK' + Date.now();
+            document.getElementById('order-id').textContent = orderId;
+
+            localStorage.removeItem('cart'); // Clear the cart after successful payment
+            paymentContainer.style.display = 'none';
+            successMessage.style.display = 'block';
+
+            // Set a timer to make the confirmation message disappear
+            setTimeout(() => {
+                successMessage.classList.add('fade-out-up');
+                // After the animation finishes, hide it completely
+                setTimeout(() => successMessage.style.display = 'none', 1000);
+            }, 3000); // Message stays for 3 seconds before starting to fade
+        };
+
+        if (total) {
+            totalAmountSpan.textContent = total.toFixed(2);
+            initializeStripe();
+        }
+
+        async function initializeStripe() {
+            try {
+                const response = await fetch('/create-payment-intent', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount: total }),
+                });
+                const { clientSecret } = await response.json();
+
+                elements = stripe.elements({ clientSecret });
+                const paymentElement = elements.create("payment");
+                paymentElement.mount("#payment-element");
+            } catch (error) {
+                console.error("Failed to initialize Stripe:", error);
+                document.getElementById("payment-message").textContent = "Failed to load payment form. Please refresh the page.";
+            }
+        }
+
+        // Credit Card Form
+        paymentForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payButton = paymentForm.querySelector('button[type="submit"]');
+            payButton.disabled = true;
+            payButton.textContent = 'Processing...';
+
+            const { error } = await stripe.confirmPayment({
+                elements,
+                confirmParams: {
+                    // Make sure to change this to your success page URL
+                    return_url: window.location.href.split('?')[0].replace('Payments.html', 'success.html'),
+                },
+            });
+
+            // This point will only be reached if there is an immediate error when
+            // confirming the payment. Otherwise, your customer will be redirected to
+            // your `return_url`.
+            if (error.type === "card_error" || error.type === "validation_error") {
+                document.getElementById("payment-message").textContent = error.message;
+            } else {
+                document.getElementById("payment-message").textContent = "An unexpected error occurred.";
+            }
+
+            payButton.disabled = false;
+            payButton.textContent = 'Pay Now';
+        });
+
+        // M-Pesa Form
+        mpesaForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const payButton = mpesaForm.querySelector('button[type="submit"]');
+            payButton.disabled = true;
+            payButton.textContent = 'Sending prompt...';
+
+            const phoneNumber = document.getElementById('mpesaPhone').value;
+            const amount = parseFloat(totalAmountSpan.textContent);
+
+            // 1. Initiate the payment
+            fetch('/initiate-mpesa-payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ amount, phoneNumber })
+            })
+            .then(async res => {
+                const data = await res.json();
+                if (!res.ok) {
+                    throw new Error(data.message || data.error || 'Unable to start M-Pesa payment. Check server logs for details.');
+                }
+
+                if (data.ResponseCode === '0') {
+                    payButton.textContent = 'Confirming Payment...';
+                    pollPaymentStatus(data.checkoutRequestID);
+                } else {
+                    throw new Error(data.errorMessage || 'An error occurred.');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert(err.message || 'A server error occurred. Please try again later.');
+                payButton.disabled = false;
+                payButton.textContent = 'Pay with M-Pesa';
+            });
+        });
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = cartCount;
+        }
+
+        function pollPaymentStatus(checkoutId) {
+            const interval = setInterval(() => {
+                fetch(`/payment-status/${checkoutId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            clearInterval(interval);
+                            showSuccess();
+                        } else if (data.status === 'failed') {
+                            clearInterval(interval);
+                            alert('Payment failed or was cancelled. Please try again.');
+                            document.querySelector('#mpesa-form button[type="submit"]').disabled = false;
+                        }
+                        // If status is 'pending' or 'not_found', do nothing and let the polling continue.
+                    });
+            }, 3000); // Check every 3 seconds
+        }
+        // PayPal Button
+        paypalButton.addEventListener('click', () => {
+            paypalButton.disabled = true;
+            paypalButton.innerHTML = 'Redirecting to PayPal...';
+            // In a real app, you would redirect to PayPal and handle the callback
+            setTimeout(() => {
+                // Assuming payment is successful after "returning" from PayPal
+                showSuccess();
+            }, 3000); // Simulate redirect and payment
+        });
+
+        // Bank Transfer Button
+        bankTransferButton.addEventListener('click', () => {
+            bankTransferButton.disabled = true;
+            bankTransferButton.textContent = 'Confirming Payment...';
+            setTimeout(showSuccess, 2000); // Simulate manual confirmation delay
+        });
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>    
+</body>
+</html>
