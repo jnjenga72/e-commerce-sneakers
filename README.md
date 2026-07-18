@@ -1,2 +1,1 @@
-# Mr-Kicks-store
-# Mr-Kicksstore
+# e-commerce-sneakers
