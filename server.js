@@ -226,8 +226,16 @@ app.post('/daraja-callback', async (req, res) => {
         if (transDate) transactionUpdate.transactionDate = transDate.Value;
     }
 
-    await Transaction.findOneAndUpdate({ checkoutRequestID: checkoutId }, transactionUpdate);
+    await Transaction.findOneAndUpdate(
+        { checkoutRequestID: checkoutId },
+        transactionUpdate
+    );
     res.send({ ResultCode: 0, ResultDesc: "Accepted successfully" });
+});
+
+// Explicit root route handler to serve frontend index.html on Vercel deployment
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 const PORT = process.env.PORT || 4242;
