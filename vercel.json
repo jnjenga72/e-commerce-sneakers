@@ -8,7 +8,19 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/create-payment-intent",
+      "dest": "server.js"
+    },
+    {
+      "src": "/initiate-mpesa-payment",
+      "dest": "server.js"
+    },
+    {
+      "src": "/payment-status/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/daraja-callback",
       "dest": "server.js"
     }
   ]
